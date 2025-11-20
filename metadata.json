@@ -1,0 +1,8 @@
+{
+  "name": "Nova - Production Voice Assistant",
+  "description": "A high-performance, production-ready web voice assistant powered by Gemini Live API. Features real-time audio visualization, tool execution, and context awareness.",
+  "requestFramePermissions": [
+    "microphone",
+    "display-capture"
+  ]
+}
