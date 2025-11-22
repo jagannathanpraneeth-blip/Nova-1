@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNova } from './hooks/useNova';
 import Visualizer from './components/Visualizer';
 import Console from './components/Console';
-import { Power, Settings, ShieldCheck, Activity, Command, Ear, Monitor, X, Send } from 'lucide-react';
+import { Power, Settings, ShieldCheck, Activity, Command, Ear, Monitor, X, Send, Info, Mic, AppWindow, Search, Clock, Puzzle, Smartphone, Lock } from 'lucide-react';
 import { NovaStatus } from './types';
 
 // Safe check for API Key
@@ -27,6 +27,7 @@ function App() {
   } = useNova();
 
   const [textInput, setTextInput] = useState('');
+  const [showFeatures, setShowFeatures] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Attach screen stream to video element when available
@@ -85,6 +86,70 @@ function App() {
          <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[100px]"></div>
       </div>
 
+      {/* Features Modal */}
+      {showFeatures && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 max-w-5xl w-full shadow-2xl relative overflow-y-auto max-h-[90vh]">
+                <button onClick={() => setShowFeatures(false)} className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white transition-colors rounded-full hover:bg-slate-800">
+                    <X className="w-6 h-6" />
+                </button>
+                
+                <div className="flex items-center gap-3 mb-8">
+                    <div className="w-10 h-10 rounded bg-gradient-to-br from-nova-500 to-purple-600 flex items-center justify-center shadow-lg">
+                        <Activity className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold text-white">Nova Capabilities</h2>
+                        <p className="text-nova-400 text-sm font-mono">SYSTEM MODULES v2.5</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <FeatureCard 
+                        icon={<Mic className="text-blue-400" />} 
+                        title="Voice Commands" 
+                        desc="Natural language processing for smooth, conversational interaction." 
+                    />
+                    <FeatureCard 
+                        icon={<AppWindow className="text-purple-400" />} 
+                        title="App Automation" 
+                        desc="Open apps, toggle settings, and launch system tools." 
+                    />
+                    <FeatureCard 
+                        icon={<Search className="text-emerald-400" />} 
+                        title="Smart Search" 
+                        desc="Search the web, find files, and retrieve information instantly." 
+                    />
+                    <FeatureCard 
+                        icon={<Clock className="text-amber-400" />} 
+                        title="Reminders & Tasks" 
+                        desc="Set alarms, reminders, notes, and to-dos." 
+                    />
+                    <FeatureCard 
+                        icon={<Puzzle className="text-pink-400" />} 
+                        title="Modular Design" 
+                        desc="Add new skills or abilities with simple plugin modules." 
+                    />
+                    <FeatureCard 
+                        icon={<Smartphone className="text-indigo-400" />} 
+                        title="Cross-Platform" 
+                        desc="Built to adapt to mobile, desktop, or web environments." 
+                    />
+                    <FeatureCard 
+                        icon={<Lock className="text-red-400" />} 
+                        title="Privacy-Friendly" 
+                        desc="Runs locally where possible with optional cloud integrations." 
+                    />
+                    <FeatureCard 
+                        icon={<Monitor className="text-cyan-400" />} 
+                        title="Visual Intelligence" 
+                        desc="Real-time screen analysis and context awareness." 
+                    />
+                </div>
+            </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="relative z-10 px-6 py-4 flex items-center justify-between border-b border-slate-800/50 backdrop-blur-md">
         <div className="flex items-center gap-3">
@@ -95,7 +160,7 @@ function App() {
         </div>
         <div className="flex items-center gap-4">
              {isWakeWordListening && status === NovaStatus.IDLE && (
-                 <div className="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono border border-amber-500/30 bg-amber-900/10 text-amber-400 animate-pulse">
+                 <div className="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono border border-amber-500/30 bg-amber-900/10 text-amber-400 animate-pulse hidden md:flex">
                     <Ear className="w-3 h-3" />
                     LISTENING FOR "PORCUPINE"
                  </div>
@@ -125,7 +190,7 @@ function App() {
                 
                 {/* Screen Share Preview */}
                 {isScreenSharing && (
-                    <div className="absolute top-4 right-4 w-48 aspect-video bg-black rounded border border-slate-700 overflow-hidden shadow-lg z-20">
+                    <div className="absolute top-4 right-4 w-48 aspect-video bg-black rounded border border-slate-700 overflow-hidden shadow-lg z-20 animate-in fade-in slide-in-from-top-4">
                          <video 
                             ref={videoRef} 
                             autoPlay 
@@ -145,8 +210,8 @@ function App() {
                     status={status} 
                 />
                 
-                <div className="absolute bottom-8 text-center">
-                    <h2 className={`text-3xl font-light tracking-widest mb-3 transition-colors duration-300 ${
+                <div className="absolute bottom-8 text-center w-full px-4">
+                    <h2 className={`text-2xl md:text-3xl font-light tracking-widest mb-3 transition-colors duration-300 ${
                         status === NovaStatus.ERROR ? 'text-red-400' : 'text-slate-200'
                     }`}>
                         {getStatusText(status)}
@@ -193,6 +258,14 @@ function App() {
                     )}
 
                     <div className="flex gap-3">
+                        <button 
+                            onClick={() => setShowFeatures(true)}
+                            className="p-3 rounded-full bg-slate-800/50 hover:bg-slate-700 text-slate-400 hover:text-nova-400 transition-all"
+                            title="Capabilities"
+                        >
+                            <Info className="w-5 h-5" />
+                        </button>
+
                         {/* Screen Share Toggle */}
                         <button 
                             onClick={isScreenSharing ? stopScreenShare : startScreenShare}
@@ -242,5 +315,17 @@ function App() {
     </div>
   );
 }
+
+const FeatureCard = ({ icon, title, desc }: { icon: React.ReactNode, title: string, desc: string }) => (
+    <div className="bg-slate-800/50 border border-slate-700 p-5 rounded-xl hover:bg-slate-800 transition-colors flex flex-col gap-3 group">
+        <div className="p-2 bg-slate-900 rounded-lg w-fit group-hover:scale-110 transition-transform">
+            {icon}
+        </div>
+        <div>
+            <h3 className="font-bold text-slate-200 mb-1">{title}</h3>
+            <p className="text-sm text-slate-400 leading-relaxed">{desc}</p>
+        </div>
+    </div>
+);
 
 export default App;
