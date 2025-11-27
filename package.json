@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "@google/genai": "^0.1.0",
+    "@google/genai": "^0.2.1",
     "lucide-react": "^0.454.0",
     "@picovoice/porcupine-web": "^2.2.5",
     "@picovoice/web-voice-processor": "^4.0.9"

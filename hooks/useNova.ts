@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { GoogleGenAI, LiveServerMessage, Modality, FunctionDeclaration, Type, LiveSession } from '@google/genai';
+import { GoogleGenAI, Modality, Type } from '@google/genai';
+import type { LiveServerMessage, FunctionDeclaration, LiveSession } from '@google/genai';
 import { NovaStatus, LogEntry } from '../types';
 import { decode, decodeAudioData, createBlob, downsampleTo16k, PCM_SAMPLE_RATE_INPUT, PCM_SAMPLE_RATE_OUTPUT } from '../services/audioUtils';
 

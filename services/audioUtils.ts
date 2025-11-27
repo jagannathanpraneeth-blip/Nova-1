@@ -1,4 +1,4 @@
-import { Blob as GenAIBlob } from "@google/genai";
+import type { Blob as GenAIBlob } from "@google/genai";
 
 export const PCM_SAMPLE_RATE_INPUT = 16000;
 export const PCM_SAMPLE_RATE_OUTPUT = 24000;
