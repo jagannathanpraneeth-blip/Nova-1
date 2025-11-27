@@ -1,0 +1,7 @@
+react
+react-dom
+@google/genai
+lucide-react
+@picovoice/porcupine-web
+@picovoice/web-voice-processor
+tailwindcss (via CDN)
